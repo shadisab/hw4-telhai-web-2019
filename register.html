@@ -1,0 +1,97 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/6.1.1/firebase-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/6.1.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-storage.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAo1bIERvfTPsffOPJHBVfLLSQ59sDNdPw",
+            authDomain: "weatherapp-cd486.firebaseapp.com",
+            databaseURL: "https://weatherapp-cd486.firebaseio.com",
+            projectId: "weatherapp-cd486",
+            storageBucket: "weatherapp-cd486.appspot.com",
+            messagingSenderId: "1010797821334",
+            appId: "1:1010797821334:web:8c01bdfc6bdd4a14"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var storageRef = firebase.storage().ref();
+    </script>
+    <link href="register.css" rel="stylesheet" media="all">
+</head>
+
+<body>
+    <script>
+        $(document).ready(function () {
+            var file;
+            $("#imag").change((e)=>{
+                file = e.target.files[0];
+            });
+            $("#sign-up-btn").click(() => {
+                if (checkValidation()) {
+                    firebase.auth().createUserWithEmailAndPassword($("#mail").val(), $("#pass").val())
+                    .then(()=>{
+                        var userImageRef = storageRef.child('users-images/'+$("#mail").val());
+                        userImageRef.put(file)
+                    }).catch(function (error) {
+                        console.log(error.code);
+                    });
+
+                }
+            })
+            function checkValidation() {
+                if ($("#name").val() == '') {
+                    alert("Youm Must Enter a Name");
+                    return false;
+                }
+                if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#mail").val())) {
+                    alert("Youm Must Enter a Valid Email");
+                    return false;
+                }
+                if ($("#pass").val() == '') {
+                    alert("Youm Must Enter a Password");
+                    return false;
+                }
+                if (!$("#imag").val()) {
+                    alert("Youm Must Enter a Photo");
+                    return false;
+                }
+                return true;
+            }
+        });
+       
+
+    </script>
+    <center class="form-row">
+        <label>Name: </label>
+        <br>
+        <input id="name" placeholder="Name" type="text" name="full_name">
+    </center>
+    <center class="form-row">
+        <label>Email: </label>
+        <br>
+        <input id="mail" type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            placeholder="example@email.com">
+    </center>
+    <center class="form-row">
+        <label>Password: </label>
+        <br>
+        <input id="pass" placeholder="Password" type="password" name="password">
+    </center>
+    <center class="form-row">
+        <label class="label--file" for="file">Choose file</label>
+        <br>
+        <input id="imag" type="file" name="file_cv">
+    </center>
+    <center>
+        <button id="sign-up-btn">
+            Sign Up
+        </button>
+    </center>
+</body>
+
+</html>
