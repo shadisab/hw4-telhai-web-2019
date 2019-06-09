@@ -1,0 +1,68 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="Weather.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="container">
+                <center>
+                        <p> <strong> Please Select a City </strong> </p>
+                        <select id="selcted_country">
+                            <option selected="selected" value="London">London</option>
+                            <option value="Barcelona">Barcelona</option>
+                            <option value="Madrid">Madrid</option>
+                            <option value="New York">New York</option>
+                            <option value="Budapest">Budapest</option>
+                        </select>
+                </center>
+            <div class="content">
+                <h1 class="Condition"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
+                <h1 class="Temp">72<span id="F">&#8457;</span></h1>
+                <h1 class="Time">09:35</h1>
+                <h1 class="Location"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
+            </div>
+        </div>
+    </div>
+    <script>
+        var CountryUrl = "http://api.openweathermap.org/data/2.5/forecast?q=";
+        var CountryUrlConcat = "&APPID=81cadddb887d693c2da2b0e4351aba07";
+        var FullLink, CityName;
+        var Mydate = "12:00:00";
+        var AvailableWeatherDate = "";
+        /* http requests and using Local Storage*/
+        $(document).ready(function () {
+            $("#selcted_country").change(function () {
+                CityName = document.getElementById('selcted_country').value;
+                AvailableWeatherDate = ""
+                FullLink = CountryUrl + CityName + CountryUrlConcat;
+                ($).ajax({
+                    url: FullLink,
+                    type: "get",
+                    success: (data) => {
+                        console.log(data);
+                        var listoffreq = data.list;
+                        $.each(listoffreq, function (index) {
+                            if (listoffreq[index].dt_txt.includes(Mydate)) {
+                                var dd = new Date(listoffreq[index].dt_txt.substring(0, 10));
+                                AvailableWeatherDate += "Date: " + dd.toString().substring(0, 15) + "  " + "Weather: " + listoffreq[index].weather[0].main + '<br>';
+                            }
+                        });
+                        document.getElementById("Daily").innerHTML = AvailableWeatherDate;
+                    },
+                    error: (err) => {
+                        console.log(err);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
