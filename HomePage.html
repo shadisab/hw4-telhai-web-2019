@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login V4</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="HomePage/fonts/iconic/css/material-design-iconic-font.min.css">
+	<link rel="stylesheet" type="text/css" href="HomePage/css/util.css">
+	<link rel="stylesheet" type="text/css" href="HomePage/css/main.css">
+	<script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-auth.js"></script>
+	<script>
+		var firebaseConfig = {
+		  apiKey: "AIzaSyAo1bIERvfTPsffOPJHBVfLLSQ59sDNdPw",
+		  authDomain: "weatherapp-cd486.firebaseapp.com",
+		  databaseURL: "https://weatherapp-cd486.firebaseio.com",
+		  projectId: "weatherapp-cd486",
+		  storageBucket: "weatherapp-cd486.appspot.com",
+		  messagingSenderId: "1010797821334",
+		  appId: "1:1010797821334:web:8c01bdfc6bdd4a14"
+		};
+		firebase.initializeApp(firebaseConfig);
+	  </script>
+</head>
+<body>	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('HomePage/images/bck-ground.jpg');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+					<span class="login100-form-title p-b-49">
+						Login
+					</span>
+
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "Email is reauired">
+						<span class="label-input100">Email</span>
+						<input class="input100" type="text" id = "email"  placeholder="Type your Email">
+						<span class="focus-input100" data-symbol="&#xf206;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Password is required">
+						<span class="label-input100">Password</span>
+						<input class="input100" type="password" id ="pass" placeholder="Type your password">
+						<span class="focus-input100" data-symbol="&#xf190;"></span>
+					</div>
+					
+					<div class="text-right p-t-8 p-b-31">
+						<button id ="frg-pass">
+							Forgot password?
+						</button>
+					</div>
+					
+					<div class="container-login100-form-btn m-t-52">
+						<div id ="lgnbtnSubmit"  class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn">
+								Login
+							</button>
+						</div>
+					</div>
+					<div class="container-login100-form-btn m-t-20 m-b-70">
+						<div id ="sgnbtnSubmit" class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button  class="login100-form-btn">
+								Sign up
+							</button>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	$(document).ready(function() {
+        $("#lgnbtnSubmit").click(function(){
+			let email = $("#email").val();
+	        let pass = $("#pass").val();
+			console.log(email);
+			firebase.auth().signInWithEmailAndPassword(email, pass).then(function(){
+				window.location.href = "http://www.google.com/"; 	
+			})
+			.catch(function(error) {
+					var errorCode = error.code;
+					var errorMessage = error.message;
+					console.log(errorCode + errorMessage);
+					alert("Invalid Username/Password,Please retry!");
+			});
+		});
+		$("#frg-pass").click(() => {
+			let email = $("#email").val();
+			firebase.auth().sendPasswordResetEmail(email)
+		})
+		$("#sgnbtnSubmit").click(function(){
+			window.location.href = "http://www.google.com/"; 	
+		}); 
+});
+	</script>
+</body>
+</html>
