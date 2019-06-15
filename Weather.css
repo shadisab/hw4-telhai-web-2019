@@ -8,11 +8,55 @@ body{
     background-color: #ededed;
 }
 
-.container{
-    position: relative;
+.container0{
+    position: absolute;
+    overflow: hidden;
+    display: flexbox;
     margin: 150px auto;
+    margin-left: 40%;
     height: 90px;
-    width: 300px;
+    width: 20%;
+    background-color: #F17022;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px rgba(0,0,0,0.2);
+}
+.container1{
+    position: absolute;
+    margin-top: 250;
+    margin-left: 40%;
+    height: 90px;
+    width: 20%;
+    background-color: #F17022;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px rgba(0,0,0,0.2);
+}
+.container2{
+    position: absolute;
+    display: flexbox;
+    margin-top: 50;
+    margin-left: 40%;
+    height: 90px;
+    width: 20%;
+    background-color: #F17022;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px rgba(0,0,0,0.2);
+}
+.container3{
+    position: absolute;
+    margin-top: 350;
+    margin-left: 40%;
+    height: 90px;
+    width: 20%;
+    background-color: #F17022;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px rgba(0,0,0,0.2);
+}
+.container4{
+    position: absolute;
+    margin-top: 450;
+    margin-left: 40%;
+    height: 90px;
+    width: 20%;
     background-color: #F17022;
     border-radius: 10px;
     box-shadow: 2px 2px 1px rgba(0,0,0,0.2);
@@ -38,17 +82,17 @@ body{
     z-index: 1000;
     position: absolute;
     font-family: "Roboto", sans-serif;
-    font-size: 35px;
+    font-size: 15px;
     font-weight: 400;
     left: 20px;
-    bottom: 5px;
+    bottom: 0px;
 }
 
 #F{
     z-index: 1000;
     font-family: "Roboto",sans-serif;
     font-weight: 100;
-    font-size: 30px;
+    font-size: 15px;
 }
 
 
@@ -76,10 +120,24 @@ body{
     right: 20px;
     bottom: 15px;
 }
-
-@keyframes enlarge{
-    50%{
-        transform: scale(1.2);
-    }
+.select-style {
+    border: 1px solid rgb(0, 200, 200);
+    width: 220px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fafafa url("img/icon-select.png") no-repeat 90% 50%;
 }
 
+.select-style select {
+    padding: 5px 8px;
+    width: 130%;
+    border: none;
+    box-shadow: #ccc;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+.select-style select:focus {
+    outline: none;
+}

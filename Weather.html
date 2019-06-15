@@ -11,31 +11,49 @@
 </head>
 
 <body>
-    <div class="container">
-                <center>
-                        <p> <strong> Please Select a City </strong> </p>
-                        <select id="selcted_country">
-                            <option selected="selected" value="London">London</option>
-                            <option value="Barcelona">Barcelona</option>
-                            <option value="Madrid">Madrid</option>
-                            <option value="New York">New York</option>
-                            <option value="Budapest">Budapest</option>
-                        </select>
-                </center>
-            <div class="content">
-                <h1 class="Condition"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
-                <h1 class="Temp">72<span id="F">&#8457;</span></h1>
-                <h1 class="Time">09:35</h1>
-                <h1 class="Location"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
-            </div>
-        </div>
+
+    <center>
+        <p style="color: black"> <strong> Please Select a City </strong> </p>
+        <select class="select-style" id="selcted_country">
+            <option selected="selected" value="ChooseCity">Choose a city</option>
+            <option value="London">London</option>
+            <option value="Barcelona">Barcelona</option>
+            <option value="Madrid">Madrid</option>
+            <option value="New York">New York</option>
+            <option value="Budapest">Budapest</option>
+        </select>
+    </center>
+    <div class="container0" id="container1">
+        <h1 class="Condition" id="weather1"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
+        <h1 class="Time" id="time1">09:35</h1>
+        <h1 class="Location" id="City1"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
+    </div>
+    <div class="container1" id="container2">
+        <h1 class="Condition" id="weather2"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
+        <h1 class="Time" id="time2">09:35</h1>
+        <h1 class="Location" id="City2"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
+    </div>
+    <div class="container2" id="container0">
+        <h1 class="Condition" id="weather0"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
+        <h1 class="Time" id="time0">09:35</h1>
+        <h1 class="Location" id="City0"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
+    </div>
+    <div class="container3" id="container3">
+        <h1 class="Condition" id="weather3"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
+        <h1 class="Time" id="time3">09:35</h1>
+        <h1 class="Location" id="City3"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
+    </div>
+    <div class="container4" id="container4">
+        <h1 class="Condition" id="weather4"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
+        <h1 class="Time" id="time4">09:35</h1>
+        <h1 class="Location" id="City4"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
     </div>
     <script>
         var CountryUrl = "http://api.openweathermap.org/data/2.5/forecast?q=";
         var CountryUrlConcat = "&APPID=81cadddb887d693c2da2b0e4351aba07";
         var FullLink, CityName;
         var Mydate = "12:00:00";
-        var AvailableWeatherDate = "";
+        var AvailableWeatherDate = "", Currweather = "";
         /* http requests and using Local Storage*/
         $(document).ready(function () {
             $("#selcted_country").change(function () {
@@ -51,10 +69,25 @@
                         $.each(listoffreq, function (index) {
                             if (listoffreq[index].dt_txt.includes(Mydate)) {
                                 var dd = new Date(listoffreq[index].dt_txt.substring(0, 10));
-                                AvailableWeatherDate += "Date: " + dd.toString().substring(0, 15) + "  " + "Weather: " + listoffreq[index].weather[0].main + '<br>';
+                                AvailableWeatherDate += dd.toString().substring(0, 15) + "  ";
+                                Currweather += listoffreq[index].weather[0].main + " ";
                             }
                         });
-                        document.getElementById("Daily").innerHTML = AvailableWeatherDate;
+                        var DateArray = AvailableWeatherDate.split(" ");
+                        var WeatherArray = Currweather.split(" ");
+                        var j = 0;
+                        for (var i = 0; i < 5; i++) {
+                            document.getElementById("City" + i).innerHTML = CityName;
+                            document.getElementById("weather" + i).innerHTML = WeatherArray[i];
+                            if (WeatherArray[i] == "Rain")
+                                document.getElementById("container" + i).style.backgroundColor = "#00979d";
+                            else if (WeatherArray[i] == "Clouds")
+                                document.getElementById("container" + i).style.backgroundColor = "#A1BE95";
+                            else if (WeatherArray[i] == "Clear")
+                                document.getElementById("container" + i).style.backgroundColor = "#7FFFD8";
+                            document.getElementById("time" + i).innerHTML = DateArray[j] + " " + DateArray[j + 1] + " " + DateArray[j + 2] + " " + DateArray[j + 3] + " " + DateArray[j + 4];
+                            j += 5;
+                        }
                     },
                     error: (err) => {
                         console.log(err);
