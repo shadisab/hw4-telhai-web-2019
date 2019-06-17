@@ -15,7 +15,7 @@
     <center>
         <p style="color: black"> <strong> Please Select a City </strong> </p>
         <select class="select-style" id="selcted_country">
-            <option selected="selected" value="ChooseCity">Choose a city</option>
+            <option value="" disabled selected="selected">Choose a city</option>
             <option value="London">London</option>
             <option value="Barcelona">Barcelona</option>
             <option value="Madrid">Madrid</option>
@@ -23,31 +23,31 @@
             <option value="Budapest">Budapest</option>
         </select>
     </center>
-    <div class="container0" id="container1">
+    <button class="container0" id="container1" onclick="Redirect(1)">
         <h1 class="Condition" id="weather1"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
         <h1 class="Time" id="time1">09:35</h1>
         <h1 class="Location" id="City1"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
-    </div>
-    <div class="container1" id="container2">
+    </button>
+    <button class="container1" id="container2"  onclick="Redirect(2)">
         <h1 class="Condition" id="weather2"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
         <h1 class="Time" id="time2">09:35</h1>
         <h1 class="Location" id="City2"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
-    </div>
-    <div class="container2" id="container0">
+    </button>
+    <button class="container2" id="container0"  onclick="Redirect(0)">
         <h1 class="Condition" id="weather0"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
         <h1 class="Time" id="time0">09:35</h1>
         <h1 class="Location" id="City0"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
-    </div>
-    <div class="container3" id="container3">
+    </button>
+    <button class="container3" id="container3"  onclick="Redirect(3)">
         <h1 class="Condition" id="weather3"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
         <h1 class="Time" id="time3">09:35</h1>
         <h1 class="Location" id="City3"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
-    </div>
-    <div class="container4" id="container4">
+    </button>
+    <button class="container4" id="container4"  onclick="Redirect(4)">
         <h1 class="Condition" id="weather4"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
         <h1 class="Time" id="time4">09:35</h1>
         <h1 class="Location" id="City4"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
-    </div>
+    </button>
     <script>
         var CountryUrl = "http://api.openweathermap.org/data/2.5/forecast?q=";
         var CountryUrlConcat = "&APPID=81cadddb887d693c2da2b0e4351aba07";
@@ -56,15 +56,20 @@
         var AvailableWeatherDate = "", Currweather = "";
         /* http requests and using Local Storage*/
         $(document).ready(function () {
+            $('#container0').hide();
+            $('#container1').hide();
+            $('#container2').hide();
+            $('#container3').hide();
+            $('#container4').hide();
             $("#selcted_country").change(function () {
+
                 CityName = document.getElementById('selcted_country').value;
-                AvailableWeatherDate = ""
+                AvailableWeatherDate = "";
                 FullLink = CountryUrl + CityName + CountryUrlConcat;
                 ($).ajax({
                     url: FullLink,
                     type: "get",
                     success: (data) => {
-                        console.log(data);
                         var listoffreq = data.list;
                         $.each(listoffreq, function (index) {
                             if (listoffreq[index].dt_txt.includes(Mydate)) {
@@ -73,6 +78,7 @@
                                 Currweather += listoffreq[index].weather[0].main + " ";
                             }
                         });
+
                         var DateArray = AvailableWeatherDate.split(" ");
                         var WeatherArray = Currweather.split(" ");
                         var j = 0;
@@ -88,13 +94,33 @@
                             document.getElementById("time" + i).innerHTML = DateArray[j] + " " + DateArray[j + 1] + " " + DateArray[j + 2] + " " + DateArray[j + 3] + " " + DateArray[j + 4];
                             j += 5;
                         }
+                        Currweather="";
+                        $('#container0').show();
+                        $('#container1').show();
+                        $('#container2').show();
+                        $('#container3').show();
+                        $('#container4').show();
+
                     },
+
                     error: (err) => {
                         console.log(err);
                     }
                 });
             });
         });
+        function Redirect(index)
+        {
+            var todayTime = new Date(document.getElementById("time"+index).innerHTML);
+            var month = todayTime.getMonth() + 1;
+            var day = todayTime.getDate();
+            var year = todayTime.getFullYear();
+            if(month.toString().length == 1)
+                month = '0'+month;
+            var date =  year + "-" + month + "-" + day;
+            localStorage.setItem('key', date);
+            window.location.href ='orders.html';
+        }
     </script>
 </body>
 

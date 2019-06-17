@@ -31,15 +31,10 @@
 </head>
 
 <body>
-    <script>
-        $(document).ready(function () {
-
-        });
-    </script>
     <div>
         Choose The time you would travel:
         <center>
-            From: <input type="date" name="frm-day">
+            From: <input id="from" type="date" name="frm-day">
             To: <input type="date" name="to-day">
         </center>
     </div>
@@ -56,7 +51,12 @@
             <label for="star1" title="text">1 star</label>
     </center>
 
-
+    <script>
+            document.getElementById("from").value = localStorage.getItem('key');
+            $(document).ready(function () {
+    
+            });
+        </script>
 </body>
 
 </html>
