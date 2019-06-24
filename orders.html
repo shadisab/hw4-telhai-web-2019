@@ -182,18 +182,23 @@
         document.getElementById("from").value =  localStorage.getItem('key');
         document.addEventListener("click", closeAllSelect);
 
-        /*confirm button*/
-        var flip = $('.flip-it');
+         /*confirm button*/
+         var flip = $('.flip-it');
         flip.click(function () {
-            flip.toggleClass('fliped');
+            if (($('#to').val()) == ''){
+                alert('please choose a DATE');
+        }else {
+
+                flip.toggleClass('fliped');
+            }
         });
         var flipit = $('#flip_back');
         flipit.click(function () {
             document.location.href="https://www.w3schools.com/jsref/prop_anchor_href.asp"
         });
         /*Date*/
-        $('#to').change(function(){
-            alert($('#to').val());
+        $('#to').change(function () {
+            var dateSave = ($('#to').val());
         })
 
         </script>
