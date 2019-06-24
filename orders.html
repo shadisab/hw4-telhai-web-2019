@@ -32,6 +32,7 @@
 </head>
 
 <body>
+    
     <img src="" width="70" height="70">
     <h1>Choose Date</h1>
     <label  for="From">From</label>
@@ -62,22 +63,22 @@
             title="Sucks big time - 1 star"></label>
         <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf"
             title="Sucks big time - 0.5 stars"></label>
-            
+
     </fieldset>
-    
-  
+
+
     <!--surround the select box with a "custom-select" DIV element. Remember to set the width:-->
-        <h1>  
-                <br>
-        </h1>
-        <h1>Want to rent a car?</h1>
-        <div class="custom-select" style="width:200px;">
-    <select>
-        <option value="0">Select:</option>
-        <option value="1">yes</option>
-        <option value="2">no</option>
-    </select>
-</div>
+    <h1>
+        <br>
+    </h1>
+    <h1>Want to rent a car?</h1>
+    <div class="custom-select" style="width:200px;">
+        <select>
+            <option value="0">Select:</option>
+            <option value="1">yes</option>
+            <option value="2">no</option>
+        </select>
+    </div>
     <h1>What type of car you want ? </h1>
     <div class="custom-select" style="width:200px;">
         <select>
@@ -97,8 +98,16 @@
         </select>
     </div>
 
-    <script>
+    <div class="flip-it">
+        <div class="wrap">
+            <div class="flip front">Confirm your orders</div>
+            <div id="flip_back"class="flip back">for sure ?</div>
+        </div>
+    </div>
 
+
+
+    <script>
         var x, i, j, selElmnt, a, b, c;
         /*look for any elements with the class "custom-select":*/
         x = document.getElementsByClassName("custom-select");
@@ -172,7 +181,22 @@
         then close all select boxes:*/
         document.getElementById("from").value =  localStorage.getItem('key');
         document.addEventListener("click", closeAllSelect);
-    </script>
+
+        /*confirm button*/
+        var flip = $('.flip-it');
+        flip.click(function () {
+            flip.toggleClass('fliped');
+        });
+        var flipit = $('#flip_back');
+        flipit.click(function () {
+            document.location.href="https://www.w3schools.com/jsref/prop_anchor_href.asp"
+        });
+        /*Date*/
+        $('#to').change(function(){
+            alert($('#to').val());
+        })
+
+        </script>
 
 
 
