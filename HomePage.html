@@ -84,7 +84,12 @@
 		});
 		$("#frg-pass").click(() => {
 			let email = $("#email").val();
-			firebase.auth().sendPasswordResetEmail(email)
+			if(email){
+				firebase.auth().sendPasswordResetEmail(email)
+			}
+			else{
+				alert("You Must Enter the email");
+			}
 		})
 		$("#sgnbtnSubmit").click(function(){
 			window.location.href = "Register.html"; 	
