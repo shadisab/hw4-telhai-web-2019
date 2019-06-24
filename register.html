@@ -39,7 +39,7 @@
                     // $("asd123").css("src", fr.result)
                 }
                 fr.readAsDataURL(file);
-                
+
             });
             $("#sign-up-btn").click(() => {
                 if (checkValidation()) {
@@ -84,13 +84,18 @@
     <div class="limiter">
         <div class="container-login100" style="background-image: url('HomePage/images/bck-ground.jpg');">
             <div class="wrap-maindiv">
-                <div class="wrap-profile p-r-100 p-l-100 p-t-220 p-b-220">
-                    <label id="profile-pic">
-                        <p class="edit-text" data-symbol="&#xf206;">Edit</p>
-                        <img  id="asd123" class="img-uplaoder" src="img_191958.png" alt="asd">
-                        <input id="imag" type="file">
-                    </input>
-                </label>
+                <div class="wrap-profile p-r-100 p-l-100 p-t-65 p-b-220">
+                    <span class="login100-form-title p-b-49">
+                        Profile Picture
+                    </span>
+                    <div class="img__wrap m-t-90">
+                        <label id="profile-pic">
+                            <p class="edit-text" data-symbol="&#xf206;">Edit</p>
+                            <img id="asd123" class="img-uplaoder" src="img_191958.png" alt="asd">
+                            <input id="imag" type="file">
+                            </input>
+                        </label>
+                    </div>
                 </div>
                 <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
                     <span class="login100-form-title p-b-49">
