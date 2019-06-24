@@ -193,6 +193,18 @@ iframe {
 input[type="file"]{
   display: none;
 }
+
+.img-uplaoder{
+  opacity: 1;
+  border-radius: 50%;
+  height: 300px;
+  width: 300px;
+}
+
+.img-uplaoder:hover{
+  opacity: 0.3;
+}
+
 .profile-pic{
   opacity: 1;
   border: none;
@@ -202,16 +214,11 @@ input[type="file"]{
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  border-radius: 50%;
-  height: 300px;
-  width: 300px;
-  background-image: url("img_191958.png");
-  background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
   transition: .5s ease;
   cursor:pointer;
 }
+
 .profile-pic:hover{
   opacity: 0.3;
 }
