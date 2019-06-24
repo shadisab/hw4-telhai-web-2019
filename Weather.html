@@ -6,8 +6,31 @@
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <style>
-    </style>
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-storage.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/6.1.1/firebase-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/6.1.1/firebase-firestore.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAo1bIERvfTPsffOPJHBVfLLSQ59sDNdPw",
+            authDomain: "weatherapp-cd486.firebaseapp.com",
+            databaseURL: "https://weatherapp-cd486.firebaseio.com",
+            projectId: "weatherapp-cd486",
+            storageBucket: "weatherapp-cd486.appspot.com",
+            messagingSenderId: "1010797821334",
+            appId: "1:1010797821334:web:8c01bdfc6bdd4a14"
+        };
+        firebase.initializeApp(firebaseConfig);
+        // Create a reference with an initial file path and name
+        var storageRef = firebase.storage().ref();
+    </script>
+    <div id="ProfileImage">
+        <img id="prof" src="" alt="">
+        <br>
+        <label id="user-email"></label>
+        <button id="sgn-out"> Sign Out </button>
+    </div>
 </head>
 
 <body>
@@ -28,22 +51,22 @@
         <h1 class="Time" id="time1">09:35</h1>
         <h1 class="Location" id="City1"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
     </button>
-    <button class="container1" id="container2"  onclick="Redirect(2)">
+    <button class="container1" id="container2" onclick="Redirect(2)">
         <h1 class="Condition" id="weather2"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
         <h1 class="Time" id="time2">09:35</h1>
         <h1 class="Location" id="City2"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
     </button>
-    <button class="container2" id="container0"  onclick="Redirect(0)">
+    <button class="container2" id="container0" onclick="Redirect(0)">
         <h1 class="Condition" id="weather0"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
         <h1 class="Time" id="time0">09:35</h1>
         <h1 class="Location" id="City0"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
     </button>
-    <button class="container3" id="container3"  onclick="Redirect(3)">
+    <button class="container3" id="container3" onclick="Redirect(3)">
         <h1 class="Condition" id="weather3"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
         <h1 class="Time" id="time3">09:35</h1>
         <h1 class="Location" id="City3"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
     </button>
-    <button class="container4" id="container4"  onclick="Redirect(4)">
+    <button class="container4" id="container4" onclick="Redirect(4)">
         <h1 class="Condition" id="weather4"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
         <h1 class="Time" id="time4">09:35</h1>
         <h1 class="Location" id="City4"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
@@ -61,6 +84,26 @@
             $('#container2').hide();
             $('#container3').hide();
             $('#container4').hide();
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    var child = storageRef.child('users-images/' + user.email + '');
+                    child.getDownloadURL().then(function (url) {
+                        document.getElementById("prof").src = url;
+                        $("#user-email").html(user.email)
+                    });
+                } else {
+                    document.location.href = "HomePage.html"
+                }
+            });
+
+            $("#sgn-out").click(() => {
+                firebase.auth().signOut().then(function () {
+                    document.location.href = "HomePage.html"
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            })
+
             $("#selcted_country").change(function () {
 
                 CityName = document.getElementById('selcted_country').value;
@@ -94,7 +137,7 @@
                             document.getElementById("time" + i).innerHTML = DateArray[j] + " " + DateArray[j + 1] + " " + DateArray[j + 2] + " " + DateArray[j + 3] + " " + DateArray[j + 4];
                             j += 5;
                         }
-                        Currweather="";
+                        Currweather = "";
                         $('#container0').show();
                         $('#container1').show();
                         $('#container2').show();
@@ -102,24 +145,22 @@
                         $('#container4').show();
 
                     },
-
                     error: (err) => {
                         console.log(err);
                     }
                 });
             });
         });
-        function Redirect(index)
-        {
-            var todayTime = new Date(document.getElementById("time"+index).innerHTML);
+        function Redirect(index) {
+            var todayTime = new Date(document.getElementById("time" + index).innerHTML);
             var month = todayTime.getMonth() + 1;
             var day = todayTime.getDate();
             var year = todayTime.getFullYear();
-            if(month.toString().length == 1)
-                month = '0'+month;
-            var date =  year + "-" + month + "-" + day;
+            if (month.toString().length == 1)
+                month = '0' + month;
+            var date = year + "-" + month + "-" + day;
             localStorage.setItem('key', date);
-            window.location.href ='orders.html';
+            window.location.href = 'orders.html';
         }
     </script>
 </body>

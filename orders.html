@@ -34,7 +34,7 @@
 <body>
     <img src="" width="70" height="70">
     <h1>Choose Date</h1>
-    <label for="From">From</label>
+    <label  for="From">From</label>
     <input type="date" name="from" id="from">
 
     <label for="To">To</label>
@@ -170,6 +170,7 @@
         }
         /*if the user clicks anywhere outside the select box,
         then close all select boxes:*/
+        document.getElementById("from").value =  localStorage.getItem('key');
         document.addEventListener("click", closeAllSelect);
     </script>
 
