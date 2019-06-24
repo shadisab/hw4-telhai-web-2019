@@ -73,7 +73,7 @@
 	        let pass = $("#pass").val();
 			console.log(email);
 			firebase.auth().signInWithEmailAndPassword(email, pass).then(function(){
-				window.location.href = "http://www.google.com/"; 	
+				window.location.href = "Weather.html"; 	
 			})
 			.catch(function(error) {
 					var errorCode = error.code;
