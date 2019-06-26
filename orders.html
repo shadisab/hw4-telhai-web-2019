@@ -25,16 +25,16 @@
     </script>
 
     <link href="orders.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
     <center>
         <h1>
             Welcome to Orders Page
         </h1>
     </center>
-</head>
-
-<body>
-
-    <img id="Prof" src="" width="70" height="70">
+    <img id="Prof" src="" width="50" height="50">
     <h1>Choose Date</h1>
     <label for="From">From</label>
     <input type="date" name="from" id="from">
@@ -110,8 +110,8 @@
 
     <script>
         $(document).ready(function () {
-              /*Profile Image*/
-              firebase.auth().onAuthStateChanged(function (user) {
+            /*Profile Image*/
+            firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
                     var child = storageRef.child('users-images/' + user.email + '');
                     child.getDownloadURL().then(function (url) {
@@ -192,7 +192,7 @@
             }
             /*if the user clicks anywhere outside the select box,
             then close all select boxes:*/
-           
+
             document.addEventListener("click", closeAllSelect);
 
             /*confirm button*/
@@ -216,15 +216,15 @@
             $('#to').change(function () {
                 var dateFrom = ($('#from').val());
                 var dateTo = ($('#to').val());
-                if(dateTo<dateFrom){
+                if (dateTo < dateFrom) {
                     alert("You Cant Choose a Date that before The From Date!! \nTry Again");
                     document.getElementById("to").value = localStorage.getItem('key');
 
                 }
-                
+
             })
 
-          
+
         });
     </script>
 
