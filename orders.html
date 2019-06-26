@@ -192,7 +192,7 @@
             }
             /*if the user clicks anywhere outside the select box,
             then close all select boxes:*/
-            document.getElementById("from").value = localStorage.getItem('key');
+           
             document.addEventListener("click", closeAllSelect);
 
             /*confirm button*/
@@ -204,14 +204,24 @@
 
                     flip.toggleClass('fliped');
                 }
+
             });
             var flipit = $('#flip_back');
             flipit.click(function () {
                 document.location.href = "https://www.w3schools.com/jsref/prop_anchor_href.asp"
             });
             /*Date*/
+            document.getElementById("from").value = localStorage.getItem('key');
+            document.getElementById("to").value = localStorage.getItem('key');
             $('#to').change(function () {
-                var dateSave = ($('#to').val());
+                var dateFrom = ($('#from').val());
+                var dateTo = ($('#to').val());
+                if(dateTo<dateFrom){
+                    alert("You Cant Choose a Date that before The From Date!! \nTry Again");
+                    document.getElementById("to").value = localStorage.getItem('key');
+
+                }
+                
             })
 
           
