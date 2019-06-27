@@ -169,6 +169,11 @@
         border-radius: 50%;
     }
 
+    .container {
+        display: flex; /* or inline-flex */
+        flex-direction: row;
+        justify-content:space-around;
+    }
 
     /*Confirm Button*/
     @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,800);
