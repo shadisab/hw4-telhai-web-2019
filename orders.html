@@ -64,30 +64,32 @@
         <br>
     </h1>
     <h1>Want to rent a car?</h1>
-    <div class="custom-select" style="width:200px;">
+    <div id="carop" class="custom-select" style="width:200px;">
         <select id="car-option">
             <option value="0">Select:</option>
             <option value="yes">yes</option>
             <option value="no">no</option>
         </select>
     </div>
-    <h1>What type of car you want ? </h1>
-    <div class="custom-select" style="width:200px;">
-        <select id="car-type">
-            <option value="0">Select car:</option>
-            <option value="Audi">Audi</option>
-            <option value="BMW">BMW</option>
-            <option value="Citroen">Citroen</option>
-            <option value="Ford">Ford</option>
-            <option value="Honda">Honda</option>
-            <option value="Jaguar">Jaguar</option>
-            <option value="Land Rover">Land Rover</option>
-            <option value="Mercedes">Mercedes</option>
-            <option value="Mini">Mini</option>
-            <option value="Nissan">Nissan</option>
-            <option value="Toyota">Toyota</option>
-            <option value="Volvo">Volvo</option>
-        </select>
+    <div id="carRent">
+        <h1>What type of car you want ? </h1>
+        <div class="custom-select" style="width:200px;">
+                <select id="car-type">
+                    <option value="0">Select car:</option>
+                    <option value="Audi">Audi</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Citroen">Citroen</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Jaguar">Jaguar</option>
+                    <option value="Land Rover">Land Rover</option>
+                    <option value="Mercedes">Mercedes</option>
+                    <option value="Mini">Mini</option>
+                    <option value="Nissan">Nissan</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Volvo">Volvo</option>
+                </select>
+            </div>
     </div>
 
     <div class="flip-it">
@@ -102,6 +104,7 @@
     <script>
        
         $(document).ready(function () {
+            $("#carRent").hide();
             document.getElementById("from").readOnly = true;
             var currUser = {
                 email:'',
@@ -227,7 +230,6 @@
                     document.getElementById("to").value = localStorage.getItem('key');
 
                 }
-
             })
 
             var flipit = $('#flip_back');
@@ -241,6 +243,16 @@
                     CarType:$('#car-type').val()!=0 ? $('#car-type').val():'Without Car'
                 });
             });
+
+            /*Car Options*/
+           $("#carop").click(function () {
+            if($("#car-option").val() == 'yes'){
+                $("#carRent").show();
+            }
+            else{
+                $("#carRent").hide();
+            }
+           })
         });
     </script>
 
