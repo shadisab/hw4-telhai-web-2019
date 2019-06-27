@@ -23,7 +23,7 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         var storageRef = firebase.storage().ref();
-        var database = firebase.database();     
+        var database = firebase.database();   
     </script>
 
     <link href="orders.css" rel="stylesheet" type="text/css">
@@ -45,28 +45,17 @@
     <input type="date" name="to" id="to">
 
     <h1>Hotel stars rating</h1>
-    <fieldset class="rating">
+    <fieldset id="stars-set" class="rating">
         <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5"
             title="Awesome - 5 stars"></label>
-        <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half"
-            title="Pretty good - 4.5 stars"></label>
         <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4"
             title="Pretty good - 4 stars"></label>
-        <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half"
-            title="Meh - 3.5 stars"></label>
         <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3"
             title="Meh - 3 stars"></label>
-        <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half"
-            title="Kinda bad - 2.5 stars"></label>
         <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2"
             title="Kinda bad - 2 stars"></label>
-        <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half"
-            title="Meh - 1.5 stars"></label>
         <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1"
             title="Sucks big time - 1 star"></label>
-        <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf"
-            title="Sucks big time - 0.5 stars"></label>
-
     </fieldset>
 
 
@@ -76,28 +65,28 @@
     </h1>
     <h1>Want to rent a car?</h1>
     <div class="custom-select" style="width:200px;">
-        <select>
+        <select id="car-option">
             <option value="0">Select:</option>
-            <option value="1">yes</option>
-            <option value="2">no</option>
+            <option value="yes">yes</option>
+            <option value="no">no</option>
         </select>
     </div>
     <h1>What type of car you want ? </h1>
     <div class="custom-select" style="width:200px;">
-        <select>
+        <select id="car-type">
             <option value="0">Select car:</option>
-            <option value="1">Audi</option>
-            <option value="2">BMW</option>
-            <option value="3">Citroen</option>
-            <option value="4">Ford</option>
-            <option value="5">Honda</option>
-            <option value="6">Jaguar</option>
-            <option value="7">Land Rover</option>
-            <option value="8">Mercedes</option>
-            <option value="9">Mini</option>
-            <option value="10">Nissan</option>
-            <option value="11">Toyota</option>
-            <option value="12">Volvo</option>
+            <option value="Audi">Audi</option>
+            <option value="BMW">BMW</option>
+            <option value="Citroen">Citroen</option>
+            <option value="Ford">Ford</option>
+            <option value="Honda">Honda</option>
+            <option value="Jaguar">Jaguar</option>
+            <option value="Land Rover">Land Rover</option>
+            <option value="Mercedes">Mercedes</option>
+            <option value="Mini">Mini</option>
+            <option value="Nissan">Nissan</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Volvo">Volvo</option>
         </select>
     </div>
 
@@ -111,19 +100,35 @@
 
 
     <script>
+       
         $(document).ready(function () {
             document.getElementById("from").readOnly = true;
+            var currUser = {
+                email:'',
+                id:''
+            };
+            var rating=0;
+            $('#star5').click(()=>{rating = $('#star5').val()})
+            $('#star4').click(()=>{rating = $('#star4').val()})
+            $('#star3').click(()=>{rating = $('#star3').val()})
+            $('#star2').click(()=>{rating = $('#star2').val()})
+            $('#star1').click(()=>{rating = $('#star1').val()})
+            
             /*Profile Image*/
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
+                    currUser.email = user.email;
+                    currUser.id = user.uid;
                     var child = storageRef.child('users-images/' + user.email + '');
                     child.getDownloadURL().then(function (url) {
                         document.getElementById("Prof").src = url;
                     });
+
                 } else {
                     document.location.href = "HomePage.html"
                 }
             });
+            
             var x, i, j, selElmnt, a, b, c;
             /*look for any elements with the class "custom-select":*/
             x = document.getElementsByClassName("custom-select");
@@ -209,13 +214,11 @@
                 }
 
             });
-            var flipit = $('#flip_back');
-            flipit.click(function () {
-                document.location.href = "https://www.w3schools.com/jsref/prop_anchor_href.asp"
-            });
+            
             /*Date*/
             document.getElementById("from").value = localStorage.getItem('key');
             document.getElementById("to").value = localStorage.getItem('key');
+
             $('#to').change(function () {
                 var dateFrom = ($('#from').val());
                 var dateTo = ($('#to').val());
@@ -227,7 +230,17 @@
 
             })
 
-
+            var flipit = $('#flip_back');
+            
+            flipit.click(function () {               
+                firebase.database().ref('bookings/' + currUser.id + '/' + $("#from").val()).set({
+                    DateFrom: $("#from").val(),
+                    DateTo: $("#to").val(),
+                    Stars:rating,
+                    WithCar:$('#car-option').val(),
+                    CarType:$('#car-type').val()!=0 ? $('#car-type').val():'Without Car'
+                });
+            });
         });
     </script>
 
