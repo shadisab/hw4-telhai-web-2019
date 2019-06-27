@@ -73,30 +73,32 @@
         <br>
     </h1>
     <h1>Want to rent a car?</h1>
-    <div class="custom-select" style="width:200px;">
-        <select>
+    <div  id="carop" class="custom-select" style="width:200px;">
+        <select id="caropSELECT">
             <option value="0">Select:</option>
-            <option value="1">yes</option>
-            <option value="2">no</option>
+            <option value="1" id="yes">yes</option>
+            <option value="2" id ="no">no</option>
         </select>
     </div>
-    <h1>What type of car you want ? </h1>
-    <div class="custom-select" style="width:200px;">
-        <select>
-            <option value="0">Select car:</option>
-            <option value="1">Audi</option>
-            <option value="2">BMW</option>
-            <option value="3">Citroen</option>
-            <option value="4">Ford</option>
-            <option value="5">Honda</option>
-            <option value="6">Jaguar</option>
-            <option value="7">Land Rover</option>
-            <option value="8">Mercedes</option>
-            <option value="9">Mini</option>
-            <option value="10">Nissan</option>
-            <option value="11">Toyota</option>
-            <option value="12">Volvo</option>
-        </select>
+    <div id="carRent">
+        <h1>What type of car you want ? </h1>
+        <div class="custom-select" style="width:200px;">
+            <select>
+                <option value="0">Select car:</option>
+                <option value="1">Audi</option>
+                <option value="2">BMW</option>
+                <option value="3">Citroen</option>
+                <option value="4">Ford</option>
+                <option value="5">Honda</option>
+                <option value="6">Jaguar</option>
+                <option value="7">Land Rover</option>
+                <option value="8">Mercedes</option>
+                <option value="9">Mini</option>
+                <option value="10">Nissan</option>
+                <option value="11">Toyota</option>
+                <option value="12">Volvo</option>
+            </select>
+        </div>
     </div>
 
     <div class="flip-it">
@@ -110,7 +112,9 @@
 
     <script>
         $(document).ready(function () {
+            $("#carRent").hide();
             document.getElementById("from").readOnly = true;
+        
             /*Profile Image*/
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
@@ -222,10 +226,16 @@
                     document.getElementById("to").value = localStorage.getItem('key');
 
                 }
-
             })
-
-
+            /*Car Options*/
+           $("#carop").click(function () {
+            if($("#caropSELECT").val() == Number(1)){
+                $("#carRent").show();
+            }
+            else{
+                $("#carRent").hide( );
+            }
+           })
         });
     </script>
 
