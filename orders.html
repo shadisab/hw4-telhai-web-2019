@@ -110,6 +110,7 @@
 
     <script>
         $(document).ready(function () {
+            document.getElementById("from").readOnly = true;
             /*Profile Image*/
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
