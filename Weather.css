@@ -50,8 +50,8 @@ body{
 
 }
 .imggg{
-    width:6.4%;
-    height: 6.4%;
+    width:3.1%;
+    height: 100%;
     border-radius: 50%;
     margin: 0;
     padding: 0;
@@ -78,7 +78,7 @@ body{
     display: flex;
     justify-content: center;
     width: 100px;
-    height: 6.4%;
+    height: 100%;
     border-bottom-right-radius: 25px; 
     border-top-right-radius: 25px;
     border: transparent;
