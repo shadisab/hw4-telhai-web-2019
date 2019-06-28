@@ -25,52 +25,53 @@
         // Create a reference with an initial file path and name
         var storageRef = firebase.storage().ref();
     </script>
-    <div id="ProfileImage">
-        <img id="prof" src="" alt="">
-        <br>
-        <label id="user-email"></label>
-        <button id="sgn-out"> Sign Out </button>
-    </div>
 </head>
 
 <body>
-
-    <center>
-        <p style="color: black"> <strong> Please Select a City </strong> </p>
-        <select class="select-style" id="selcted_country">
-            <option value="" disabled selected="selected">Choose a city</option>
-            <option value="London">London</option>
-            <option value="Barcelona">Barcelona</option>
-            <option value="Madrid">Madrid</option>
-            <option value="New York">New York</option>
-            <option value="Budapest">Budapest</option>
-        </select>
-    </center>
-    <button class="container0" id="container1" onclick="Redirect(1)">
-        <h1 class="Condition" id="weather1"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
-        <h1 class="Time" id="time1">09:35</h1>
-        <h1 class="Location" id="City1"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
-    </button>
-    <button class="container1" id="container2" onclick="Redirect(2)">
-        <h1 class="Condition" id="weather2"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
-        <h1 class="Time" id="time2">09:35</h1>
-        <h1 class="Location" id="City2"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
-    </button>
-    <button class="container2" id="container0" onclick="Redirect(0)">
-        <h1 class="Condition" id="weather0"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
-        <h1 class="Time" id="time0">09:35</h1>
-        <h1 class="Location" id="City0"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
-    </button>
-    <button class="container3" id="container3" onclick="Redirect(3)">
-        <h1 class="Condition" id="weather3"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
-        <h1 class="Time" id="time3">09:35</h1>
-        <h1 class="Location" id="City3"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
-    </button>
-    <button class="container4" id="container4" onclick="Redirect(4)">
-        <h1 class="Condition" id="weather4"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
-        <h1 class="Time" id="time4">09:35</h1>
-        <h1 class="Location" id="City4"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
-    </button>
+    <div class="limiter">
+        <div class="cloud"> </div>
+        <div class="Toolbar">
+            <div id="ProfileImage">
+                <img class="imggg" id="prof" src="" alt=""> 
+                <label class="use-acc" id="user-email"></label>
+                <button  class="sgnout-btn" id="sgn-out">Sign out</button>
+            </div>
+        </div> 
+            <p style="color: black; margin-left: 44%;position: absolute;"> <strong> Please Select a City </strong> </p>
+            <select class="select-style" id="selcted_country">
+                <option value="" disabled selected="selected">Choose a city</option>
+                <option value="London">London</option>
+                <option value="Barcelona">Barcelona</option>
+                <option value="Madrid">Madrid</option>
+                <option value="New York">New York</option>
+                <option value="Budapest">Budapest</option>
+            </select>
+        <button class="container0" id="container1" onclick="Redirect(1)">
+            <h1 class="Condition" id="weather1"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
+            <h1 class="Time" id="time1">09:35</h1>
+            <h1 class="Location" id="City1"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
+        </button>
+        <button class="container1" id="container2" onclick="Redirect(2)">
+            <h1 class="Condition" id="weather2"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
+            <h1 class="Time" id="time2">09:35</h1>
+            <h1 class="Location" id="City2"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
+        </button>
+        <button class="container2" id="container0" onclick="Redirect(0)">
+            <h1 class="Condition" id="weather0"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
+            <h1 class="Time" id="time0">09:35</h1>
+            <h1 class="Location" id="City0"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
+        </button>
+        <button class="container3" id="container3" onclick="Redirect(3)">
+            <h1 class="Condition" id="weather3"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
+            <h1 class="Time" id="time3">09:35</h1>
+            <h1 class="Location" id="City3"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
+        </button>
+        <button class="container4" id="container4" onclick="Redirect(4)">
+            <h1 class="Condition" id="weather4"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
+            <h1 class="Time" id="time4">09:35</h1>
+            <h1 class="Location" id="City4"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
+        </button>
+    </div>
     <script>
         var CountryUrl = "http://api.openweathermap.org/data/2.5/forecast?q=";
         var CountryUrlConcat = "&APPID=81cadddb887d693c2da2b0e4351aba07";
@@ -85,11 +86,14 @@
             $('#container3').hide();
             $('#container4').hide();
             firebase.auth().onAuthStateChanged(function (user) {
+                var x;
                 if (user) {
                     var child = storageRef.child('users-images/' + user.email + '');
                     child.getDownloadURL().then(function (url) {
                         document.getElementById("prof").src = url;
-                        $("#user-email").html(user.email)
+                        x = user.email.split('@');
+                        $("#user-email").html(x[0]);
+
                     });
                 } else {
                     document.location.href = "HomePage.html"
