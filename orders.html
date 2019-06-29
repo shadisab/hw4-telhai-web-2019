@@ -247,19 +247,21 @@
             })
 
             /*Date*/
-            document.getElementById("from").value = localStorage.getItem('key');
-            document.getElementById("to").value = localStorage.getItem('key');
+            $("#from").val(localStorage.getItem('key'));
 
             var ordersList = [];
+            var datesList = [];
+
             firebase.database().ref('bookings/' + currUser.id).once('value').then(function(snapshot) {
                 ordersList = snapshot.val();
                 ordersList = ordersList[currUser.id]
                 $.each(ordersList,function(index,value) {
-                    // console.log(value);
+                    datesList.push({from:value.DateFrom , To:value.DateTo});        
                 $('#orders-list').append('<li>' + 'Destination:' + cityName +'  --  From:'+ value.DateFrom + ' --  To:'+value.DateFrom + 
                 ' --  Stars:' + value.Stars+ '</li> <hr>')
             })   
             });
+            console.log(datesList);
             // console.log(typeof(ordersList));
             
            
