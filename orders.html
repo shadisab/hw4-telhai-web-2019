@@ -98,7 +98,7 @@
         </div>
         <div >
            <h1> Orders History List </h1>
-           <div style="overflow: scroll; height: 200px;width: 400px">
+           <div style="overflow: scroll; height: 200px;width: 500px">
                 <ol id="orders-list"/>
            </div>
         </div>
@@ -110,6 +110,7 @@
             <div id="flip_back" class="flip back">for sure ?</div>
         </div>
     </footer>
+    <center> <button hidden id="cancel" class="cancel-btn" > Cancel </button></center>
 
 
 
@@ -117,7 +118,8 @@
 
         $(document).ready(function () {
             $("#carRent").hide();
-            document.getElementById("from").readOnly = true;
+            var cityName = localStorage.getItem('city');
+            $("#from").attr('readonly', true);
             var currUser = {
                 email: '',
                 id: ''
@@ -221,14 +223,28 @@
             /*confirm button*/
             var flip = $('.flip-it');
             flip.click(function () {
-                if (($('#to').val()) == '') {
+                if (($('#to').val()) == '' ) {
                     alert('please choose a DATE');
-                } else {
-
-                    flip.toggleClass('fliped');
+                    return;
                 }
-
+                if(rating == 0){
+                    alert('please choose hotel star rating');
+                    return;
+                }
+                if($('#car-option').val()==0 || ($('#car-option').val()=='yes' && $('#car-type').val()==0)){
+                    alert('please choose car rent/type option');
+                    return;
+                }
+                 else {
+                    flip.toggleClass('fliped');
+                    $('#cancel').attr('hidden',false);
+                }
             });
+
+            $('#cancel').click(()=>{
+                $('#cancel').attr('hidden',true);
+                flip.toggleClass('fliped');
+            })
 
             /*Date*/
             document.getElementById("from").value = localStorage.getItem('key');
@@ -240,8 +256,8 @@
                 ordersList = ordersList[currUser.id]
                 $.each(ordersList,function(index,value) {
                     // console.log(value);
-                $('#orders-list').append('<li>' +' From:'+ value.DateFrom + ' To:'+value.DateFrom + 
-                ' Stars:' + value.Stars+ '</li> <hr>')
+                $('#orders-list').append('<li>' + 'Destination:' + cityName +'  --  From:'+ value.DateFrom + ' --  To:'+value.DateFrom + 
+                ' --  Stars:' + value.Stars+ '</li> <hr>')
             })   
             });
             // console.log(typeof(ordersList));
@@ -261,13 +277,16 @@
             var flipit = $('#flip_back');
 
             flipit.click(function () {
+                debugger;
                 firebase.database().ref('bookings/' + currUser.id + '/' + $("#from").val()).set({
-                    DateFrom: $("#from").val(),
-                    DateTo: $("#to").val(),
-                    Stars: rating,
-                    WithCar: $('#car-option').val(),
-                    CarType: $('#car-type').val() != 0 ? $('#car-type').val() : 'Without Car'
+                DestinationCity:cityName,
+                DateFrom: $("#from").val(),
+                DateTo: $("#to").val(),
+                Stars: rating,
+                WithCar: $('#car-option').val(),
+                CarType: $('#car-type').val() != 0 ? $('#car-type').val() : 'Without Car'
                 });
+                document.location.href = "Weather.html";    
             });
 
             /*Car Options*/

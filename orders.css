@@ -165,6 +165,16 @@
 
     }
 
+    .cancel-btn{
+        background-color: #264AEB;
+        border-radius: 20px;
+        padding: 8px;
+        font-family: 'Open sans-serif';
+        color: #E1E5E5;
+        font-size: 25px;
+        outline: none;
+    }
+
     img {
         border-radius: 50%;
     }
