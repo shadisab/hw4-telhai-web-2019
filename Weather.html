@@ -162,6 +162,8 @@
             var year = todayTime.getFullYear();
             if (month.toString().length == 1)
                 month = '0' + month;
+            if (day.toString().length == 1)
+                day = '0' + day;
             var date = year + "-" + month + "-" + day;
             localStorage.setItem('city', CityName);
             localStorage.setItem('key', date);

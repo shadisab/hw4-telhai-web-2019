@@ -117,9 +117,12 @@
     <script>
 
         $(document).ready(function () {
+            /*Date*/
+            $("#from").val(localStorage.getItem('key'));
             $("#carRent").hide();
             var cityName = localStorage.getItem('city');
             $("#from").attr('readonly', true);
+
             var currUser = {
                 email: '',
                 id: ''
@@ -236,6 +239,16 @@
                     return;
                 }
                  else {
+                    var start = $("#from").val();
+                    var end = $("#to").val();
+                    for (let i=0 ;i < datesList.length ; i++) {
+                        if((Date.parse(start) > Date.parse(datesList[i].from) && Date.parse(start) < Date.parse(datesList[i].To)) 
+                           || ( Date.parse(end) > Date.parse(datesList[i].from) && Date.parse(end) < Date.parse(datesList[i].To))) 
+                           {
+                               alert("There are another order in this time , Please Change the Date")
+                               return;
+                           }
+                    }
                     flip.toggleClass('fliped');
                     $('#cancel').attr('hidden',false);
                 }
@@ -246,9 +259,6 @@
                 flip.toggleClass('fliped');
             })
 
-            /*Date*/
-            $("#from").val(localStorage.getItem('key'));
-
             var ordersList = [];
             var datesList = [];
 
@@ -257,7 +267,7 @@
                 ordersList = ordersList[currUser.id]
                 $.each(ordersList,function(index,value) {
                     datesList.push({from:value.DateFrom , To:value.DateTo});        
-                $('#orders-list').append('<li>' + 'Destination:' + cityName +'  --  From:'+ value.DateFrom + ' --  To:'+value.DateFrom + 
+                $('#orders-list').append('<li>' + 'Destination:' + cityName +'  --  From:'+ value.DateFrom + ' --  To:'+value.DateTo + 
                 ' --  Stars:' + value.Stars+ '</li> <hr>')
             })   
             });
