@@ -31,16 +31,17 @@
 
 <body>
 
+    <img class="profile-img" id="Prof" src="">
+    <label class="use-acc" id="user-email"></label>
+    <button class="back-btn" id="back-btn"> Back</button>
     <center>
         <h1>
             Welcome to Orders Page
         </h1>
     </center>
-    <img id="Prof" src="" width="50" height="50">
+   
     <div class="container">
         <div>
-
-
             <h1>Choose Date</h1>
             <label for="From">From</label>
             <input type="date" name="from" id="from">
@@ -137,6 +138,7 @@
             /*Profile Image*/
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
+                    $('#user-email').html(user.email);
                     currUser.email = user.email;
                     currUser.id = user.uid;
                     var child = storageRef.child('users-images/' + user.email + '');
@@ -222,6 +224,10 @@
             then close all select boxes:*/
 
             document.addEventListener("click", closeAllSelect);
+
+            $('#back-btn').click(()=>{
+                document.location.href = "Weather.html"; 
+            })
 
             /*confirm button*/
             var flip = $('.flip-it');
