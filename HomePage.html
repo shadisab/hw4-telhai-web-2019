@@ -85,7 +85,9 @@
 		$("#frg-pass").click(() => {
 			let email = $("#email").val();
 			if(email){
-				firebase.auth().sendPasswordResetEmail(email)
+				firebase.auth().sendPasswordResetEmail(email).then(()=>{
+					alert("Reset password mail , sent to your email: "+ email);
+				})
 			}
 			else{
 				alert("You Must Enter the email");

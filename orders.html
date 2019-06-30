@@ -249,7 +249,12 @@
                     var end = $("#to").val();
                     for (let i=0 ;i < datesList.length ; i++) {
                         if((Date.parse(start) > Date.parse(datesList[i].from) && Date.parse(start) < Date.parse(datesList[i].To)) 
-                           || ( Date.parse(end) > Date.parse(datesList[i].from) && Date.parse(end) < Date.parse(datesList[i].To))) 
+                           || ( Date.parse(end) > Date.parse(datesList[i].from) && Date.parse(end) < Date.parse(datesList[i].To))
+                           || (Date.parse(start) == Date.parse(datesList[i].from))
+                           || (Date.parse(end) == Date.parse(datesList[i].To))
+                           || (Date.parse(start) == Date.parse(datesList[i].To))
+                           || (Date.parse(end) == Date.parse(datesList[i].from))
+                           ) 
                            {
                                alert("There are another order in this time , Please Change the Date")
                                return;
@@ -285,7 +290,7 @@
             $('#to').change(function () {
                 var dateFrom = ($('#from').val());
                 var dateTo = ($('#to').val());
-                if (dateTo < dateFrom) {
+                if (dateTo <= dateFrom) {
                     alert("You Cant Choose a Date that before The From Date!! \nTry Again");
                     document.getElementById("to").value = localStorage.getItem('key');
 
